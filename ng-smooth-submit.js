@@ -41,6 +41,9 @@ angular.module('ngSmoothSubmit', [])
                                 form_data.append(name + '[' + key + ']', values[key]);
                         }
                     } else {
+                        if (!values && values !== false) {
+                            values = '';
+                        }
                         form_data.append(name, values);
                     }
                 }
