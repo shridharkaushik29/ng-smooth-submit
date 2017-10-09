@@ -33,10 +33,17 @@ angular.module('ngSmoothSubmit', [])
                         for (key in values) {
                             if (values[key] instanceof Object)
                                 appendFormData(form_data, values[key], name + '[' + key + ']');
-                            else
+                            else {
+                                if (values[key] === null) {
+                                    values[key] = '';
+                                }
                                 form_data.append(name + '[' + key + ']', values[key]);
+                            }
                         }
                     } else {
+                        if (values === null) {
+                            values = '';
+                        }
                         form_data.append(name, values);
                     }
                 }
