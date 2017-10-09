@@ -32,6 +32,9 @@ angular.module('ngSmoothSubmit', [])
                 var appendFormData = function (form_data, values, name) {
                     if ((values instanceof Object) && !(values instanceof File) && !(values instanceof Blob)) {
                         for (key in values) {
+                            if (values[key] === null) {
+                                values[key] = '';
+                            }
                             if (values[key] instanceof Object)
                                 appendFormData(form_data, values[key], name + '[' + key + ']');
                             else
