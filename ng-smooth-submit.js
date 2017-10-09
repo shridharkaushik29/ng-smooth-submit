@@ -1,4 +1,4 @@
-angular.module('smoothSubmit', ['ngShridhar'])
+angular.module('smoothSubmit', [])
 
         .service('$smoothSubmit', ['$rootScope', '$q', function ($rootScope, $q) {
 
