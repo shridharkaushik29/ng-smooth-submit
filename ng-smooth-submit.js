@@ -1,4 +1,4 @@
-angular.module('smoothSubmit', [])
+angular.module('ngSmoothSubmit', [])
 
         .service('$smoothSubmit', ['$rootScope', '$q', function ($rootScope, $q) {
 
