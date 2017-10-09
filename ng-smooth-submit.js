@@ -6,7 +6,6 @@ angular.module('ngSmoothSubmit', [])
                     return $q(function (resolve, reject) {
 
                         var settings = {
-                            data: {},
                             success: function (data) {
                                 $rootScope.$broadcast('$smoothSubmitSuccess', data);
                                 try {
@@ -17,14 +16,14 @@ angular.module('ngSmoothSubmit', [])
                                 }
                             },
                             error: function (error) {
-                                $rootScope.$broadcast('$smoothSubmitError', data);
+                                $rootScope.$broadcast('$smoothSubmitError', error);
                                 reject(error);
                             }
                         }
-
                         settings = $.extend(settings, options);
 
                         $rootScope.$broadcast('$smoothSubmitSend');
+
                         $.ajax(settings);
                     })
                 }
@@ -32,38 +31,32 @@ angular.module('ngSmoothSubmit', [])
                 var appendFormData = function (form_data, values, name) {
                     if ((values instanceof Object) && !(values instanceof File) && !(values instanceof Blob)) {
                         for (key in values) {
-                            if (values[key] === null) {
-                                values[key] = '';
-                            }
                             if (values[key] instanceof Object)
                                 appendFormData(form_data, values[key], name + '[' + key + ']');
                             else
                                 form_data.append(name + '[' + key + ']', values[key]);
                         }
                     } else {
-                        if (!values && values !== false) {
-                            values = '';
-                        }
                         form_data.append(name, values);
                     }
                 }
 
                 return {
-                    $post: function (url, data) {
+                    $post: function (url, data, options) {
+                        var config = {};
+                        config = $.extend(config, options);
+                        config.type = "POST";
+                        config.url = url;
+                        config.cache = false;
+                        config.processData = false;
+                        config.contentType = false;
                         var formData;
                         if (data instanceof FormData) {
-                            formData = data;
+                            config.data = data;
                         } else {
                             formData = new FormData();
                             this.mergeFormData(formData, data);
-                        }
-                        var config = {
-                            type: "POST",
-                            url: url,
-                            data: formData,
-                            cache: false,
-                            processData: false,
-                            contentType: false,
+                            config.data = formData;
                         }
                         return send(config);
                     },
