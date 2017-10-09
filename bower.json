@@ -1,0 +1,11 @@
+{
+  "name": "ng-smooth-submit", "main": "ng-smooth-submit.js", "authors": [
+    "shridharkaushik29 <shridharkaushik29@gmail.com>"
+  ], "description": "Angular JS ajax request library", "keywords": [
+    "smooth-submit", "ng-smooth-submit", "angular-smooth-submit"
+  ], "license": "MIT", "homepage": "", "dependencies":{
+        "jquery":"*"
+    }, "ignore": [
+    "**/.*", "node_modules", "bower_components", "test", "tests"
+  ]
+}
