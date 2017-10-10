@@ -34,14 +34,14 @@ angular.module('ngSmoothSubmit', [])
                             if (values[key] instanceof Object)
                                 appendFormData(form_data, values[key], name + '[' + key + ']');
                             else {
-                                if (values[key] === null) {
+                                if (values[key] === null || values[key] === undefined) {
                                     values[key] = '';
                                 }
                                 form_data.append(name + '[' + key + ']', values[key]);
                             }
                         }
                     } else {
-                        if (values === null) {
+                        if (values === null || values === undefined) {
                             values = '';
                         }
                         form_data.append(name, values);
