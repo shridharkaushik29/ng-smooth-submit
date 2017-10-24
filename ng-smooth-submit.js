@@ -3,29 +3,33 @@ angular.module('ngSmoothSubmit', [])
         .service('$smoothSubmit', ['$rootScope', '$q', function ($rootScope, $q) {
 
                 var send = function (options) {
-                    return $q(function (resolve, reject) {
 
-                        var settings = {
-                            success: function (data) {
-                                $rootScope.$broadcast('$smoothSubmitSuccess', data);
-                                try {
-                                    var json = JSON.parse(data);
-                                    resolve(json);
-                                } catch (e) {
-                                    resolve(data);
-                                }
-                            },
-                            error: function (error) {
-                                $rootScope.$broadcast('$smoothSubmitError', error);
-                                reject(error);
+                    var dp = $q.defer();
+
+                    var settings = {
+                        success: function (data) {
+                            $rootScope.$broadcast('$smoothSubmitSuccess', data);
+                            try {
+                                var json = JSON.parse(data);
+                                dp.resolve(json);
+                            } catch (e) {
+                                dp.resolve(data);
                             }
+                        },
+                        error: function (error) {
+                            $rootScope.$broadcast('$smoothSubmitError', error);
+                            dp.reject(error);
                         }
-                        settings = $.extend(settings, options);
+                    }
 
-                        $rootScope.$broadcast('$smoothSubmitSend');
 
-                        $.ajax(settings);
-                    })
+                    _.merge(settings, options);
+
+                    dp.notify('$smoothSubmitSend');
+                    $rootScope.$broadcast('$smoothSubmitSend');
+                    $.ajax(settings);
+
+                    return dp.promise;
                 }
 
                 var appendFormData = function (form_data, values, name) {
@@ -51,7 +55,7 @@ angular.module('ngSmoothSubmit', [])
                 return {
                     $post: function (url, data, options) {
                         var config = {};
-                        config = $.extend(config, options);
+                        config = _.merge(config, options);
                         config.type = "POST";
                         config.url = url;
                         config.cache = false;
@@ -67,12 +71,13 @@ angular.module('ngSmoothSubmit', [])
                         }
                         return send(config);
                     },
-                    $get: function (url, data) {
-                        var config = {
-                            type: "GET",
-                            url: url,
-                            data: data,
-                        }
+                    $get: function (url, data, options) {
+                        var config = {};
+                        config = _.merge(config, options);
+                        config.type = "GET";
+                        config.url = url;
+                        config.data = data;
+
                         return send(config);
                     },
                     mergeFormData: function (formData, object) {
