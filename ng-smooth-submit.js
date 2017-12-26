@@ -17,6 +17,7 @@ angular.module('ngSmoothSubmit', ['ngCookies'])
                         var dp = $q.defer();
 
                         var settings = {
+                            xhrFields: {withCredentials: true},
                             success: function (data) {
                                 $rootScope.$broadcast('$smoothSubmitSuccess', data);
                                 try {
