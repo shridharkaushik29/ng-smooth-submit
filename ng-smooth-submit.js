@@ -57,14 +57,14 @@ angular.module('ngSmoothSubmit', ['ngCookies'])
                                     if (values[key] === null || values[key] === undefined) {
                                         values[key] = '';
                                     }
-                                    form_data.append(name + '[' + key + ']', value);
+                                    form_data.append(name + '[' + key + ']', values[key]);
                                 }
                             }
                         } else {
                             if (values === null || values === undefined) {
                                 values = '';
                             } else if (values instanceof Date) {
-                                values = $filter('date')(values, "yyyy-MM-dd HH:mm:ss", "UTC");
+                                values = $filter('date')(values, "yyyy-MM-dd HH:mm:ss");
                             }
                             form_data.append(name, values);
                         }
