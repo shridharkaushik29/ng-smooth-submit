@@ -10,7 +10,7 @@ angular.module('ngSmoothSubmit', ['ngCookies'])
                 }
             }
 
-            this.$get = ['$rootScope', '$q', '$cookies', function ($rootScope, $q, $cookies) {
+            this.$get = ['$rootScope', '$q', '$cookies', '$filter', function ($rootScope, $q, $cookies, $filter) {
 
                     var send = function (options) {
 
@@ -49,7 +49,7 @@ angular.module('ngSmoothSubmit', ['ngCookies'])
                     }
 
                     var appendFormData = function (form_data, values, name) {
-                        if ((values instanceof Object) && !(values instanceof File) && !(values instanceof Blob)) {
+                        if ((values instanceof Object) && !(values instanceof File) && !(values instanceof Blob) && !(values instanceof Date)) {
                             for (key in values) {
                                 if (values[key] instanceof Object)
                                     appendFormData(form_data, values[key], name + '[' + key + ']');
@@ -57,12 +57,14 @@ angular.module('ngSmoothSubmit', ['ngCookies'])
                                     if (values[key] === null || values[key] === undefined) {
                                         values[key] = '';
                                     }
-                                    form_data.append(name + '[' + key + ']', values[key]);
+                                    form_data.append(name + '[' + key + ']', value);
                                 }
                             }
                         } else {
                             if (values === null || values === undefined) {
                                 values = '';
+                            } else if (values instanceof Date) {
+                                values = $filter('date')(values, "yyyy-MM-dd HH:mm:ss", "UTC");
                             }
                             form_data.append(name, values);
                         }
