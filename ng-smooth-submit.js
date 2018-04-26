@@ -93,8 +93,20 @@ angular.module('ngSmoothSubmit', ['ngCookies'])
 
                     service.$get = function (url, data, options) {
                         var config = {};
+
                         config = _.merge(config, options);
                         config.type = "GET";
+                        config.url = url;
+                        config.data = data;
+
+                        return send(config);
+                    }
+                    
+                    service.$delete = function (url, data, options) {
+                        var config = {};
+
+                        config = _.merge(config, options);
+                        config.type = "DELETE";
                         config.url = url;
                         config.data = data;
 
