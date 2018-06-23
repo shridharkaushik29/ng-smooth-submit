@@ -1,27 +1,25 @@
 {
-  "name": "ng-smooth-submit",
-  "main": "ng-smooth-submit.js",
-  "authors": [
-    "shridharkaushik29 <shridharkaushik29@gmail.com>"
-  ],
-  "description": "Angular JS ajax request library",
-  "keywords": [
-    "smooth-submit",
-    "ng-smooth-submit",
-    "angular-smooth-submit"
-  ],
-  "license": "MIT",
-  "homepage": "",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
-  "dependencies": {
-    "jquery": "^3.2.1",
-    "lodash": "^4.17.4",
-    "angular-cookies": "^1.6.6"
-  }
+   "name":"ng-smooth-submit",
+   "description":"Use jQuery Ajax in AngularJS",
+   "main":"./dist/main.js",
+   "authors":[
+      "Shridhar Kaushik"
+   ],
+   "license":"ISC",
+   "keywords":[
+      "smooth-submit"
+   ],
+   "homepage":"",
+   "ignore":[
+      "**/.*",
+      "node_modules",
+      "bower_components",
+      "test",
+      "tests"
+   ],
+   "dependencies":{
+      "angular":"*",
+      "jquery":"*",
+      "lodash":"*"
+   }
 }
